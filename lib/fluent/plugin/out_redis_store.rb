@@ -9,12 +9,13 @@ module Fluent::Plugin
     DEFAULT_BUFFER_TYPE = "memory"
 
     # redis connection
-    config_param :host,      :string,  :default => '127.0.0.1'
-    config_param :port,      :integer, :default => 6379
-    config_param :path,      :string,  :default => nil
-    config_param :password,  :string,  :default => nil
-    config_param :db,        :integer, :default => 0
-    config_param :timeout,   :float,   :default => 5.0
+    config_param :sentinel_host,      :string,  :default => '127.0.0.1'
+    config_param :port,               :integer, :default => 6379
+    config_param :path,               :string,  :default => nil
+    config_param :group_name,         :string,  :default => 'redis-master'
+    config_param :password,           :string,  :default => nil
+    config_param :db,                 :integer, :default => 0
+    config_param :timeout,            :float,   :default => 5.0
 
     # redis command and parameters
     config_param :format_type,       :string,  :default => 'json'
@@ -53,13 +54,28 @@ module Fluent::Plugin
 
     def start
       super
-      if @path
-        @redis = Redis.new(:path => @path, :password => @password,
-                           :timeout => @timeout, :thread_safe => true, :db => @db)
+      
+      host=@host
+      hosts =  host.split(",")
+
+      # Initialize Sentinel Empty Array
+      sentinels = []
+
+      # Loop through each hosts and add it to sentinel array
+      if hosts.instance_of? Array
+         hosts.each do |host|
+          sentinels << {"host":host,"port":@port}
+          end
       else
-        @redis = Redis.new(:host => @host, :port => @port, :password => @password,
-                           :timeout => @timeout, :thread_safe => true, :db => @db)
+        sentinels << {"host":hosts,"port":@port}
       end
+
+      # Printing Sentinel Server List
+      $stdout.puts "Sentinel Server List #{sentinels}"
+      
+      
+      @redis = Redis.new(name:@group_name,sentinels:sentinels,role: :master, timeout: @timeout)
+      
     end
 
     def shutdown
