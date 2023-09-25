@@ -55,7 +55,7 @@ module Fluent::Plugin
     def start
       super
       
-      host=@host
+      host=@sentinel_host
       hosts =  host.split(",")
 
       # Initialize Sentinel Empty Array
@@ -120,6 +120,12 @@ module Fluent::Plugin
                 log.error "Plugin error: " + e.to_s
                 log.error "Original record: " + record.to_s
                 puts e
+              rescue Redis::CannotConnectError => e
+                log.error "Connection Error: #{e.message}"
+                log.error "Original record: " + record.to_s
+                log.info @redis
+                log.info "Retrying Redis Connection"
+                @redis = Redis.new(name:@group_name,sentinels:sentinels,role: :master, timeout: @timeout)
               end
             }
           rescue EOFError
