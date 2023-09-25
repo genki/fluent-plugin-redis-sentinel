@@ -2,7 +2,7 @@ require 'fluent/plugin/output'
 
 module Fluent::Plugin
   class RedisStoreOutput < Output
-    Fluent::Plugin.register_output('redis_store', self)
+    Fluent::Plugin.register_output('redis_sentinel', self)
 
     helpers :compat_parameters
 
