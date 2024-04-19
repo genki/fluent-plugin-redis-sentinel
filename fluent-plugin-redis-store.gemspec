@@ -3,7 +3,7 @@ Gem::Specification.new do |gem|
     gem.name        = "fluent-plugin-redis-sentinel"
     gem.email       = "gp@path.com"
     gem.version     = "0.2.0"
-    gem.authors     = ["A360"]
+    gem.authors     = ["Ganesh Pai"]
     gem.licenses    = ["Apache License Version 2.0"]
     gem.summary     = %q{Redis(zset/set/list/string/publish) output plugin for Fluentd}
     gem.description = %q{Redis(zset/set/list/string/publish) output plugin for Fluentd...}
