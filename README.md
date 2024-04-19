@@ -103,14 +103,17 @@ Configuration
 
 ### Redis connection
 
-| Key        | Type   | Required?   |                  Default | Description                                       |
-| :----      | :----- | :---------- | :----------------------- | :------------                                     |
-| `host`     | string | Optional    |                127.0.0.1 | host name of Redis server                         |
-| `port`     | int    | Optional    |                     6379 | port number of Redis server                       |
-| `password` | string | Optional    |                          | password for Redis connection                     |
-| `path`     | string | Optional    |                          | To connect via Unix socket, try '/tmp/redis.sock' |
-| `db`       | int    | Optional    |                        0 | DB number of Redis                                |
-| `timeout`  | float  | Optional    |                      5.0 | connection timeout in seconds                     |
+| Key                 | Type   | Required?   |                  Default | Description                                       |
+| :----               | :----- | :---------- | :----------------------- | :------------                                     |
+| `sentinel_host`     | string | Optional    |                127.0.0.1 | Sentinel Host name of Redis server If Mulitple 
+                                                                          separate by ',' eg sentinel1,sentinel2            |
+                                                                          
+| `port`              | int    | Optional    |                     6379 | port number of Redis server                       |
+| `password`          | string | Optional    |                          | password for Redis connection                     |
+| `group_name`        | string | Optional    |                          | Add group name                                    |
+| `path`              | string | Optional    |                          | To connect via Unix socket, try '/tmp/redis.sock' |
+| `db`                | int    | Optional    |                        0 | DB number of Redis                                |
+| `timeout`           | float  | Optional    |                      5.0 | connection timeout in seconds                     |
 
 ### common options for storages
 
