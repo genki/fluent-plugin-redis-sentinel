@@ -1,5 +1,5 @@
-Redis Output Plugin For fluentd
-===============================
+Redis Sentinel Output Plugin For fluentd
+========================================
 [Fluentd][] output plugin to upload/publish event data to [Redis][] storage.
 
 [Fluentd]: http://fluentd.org/
@@ -8,7 +8,7 @@ Redis Output Plugin For fluentd
 Requirements
 ------------
 
-| fluent-plugin-redis-store | fluentd | ruby |
+| fluent-plugin-redis-sentinel | fluentd | ruby |
 |------------------------|---------|------|
 | >= 0.2.0 | >= v0.14.15 | >= 2.1 |
 |  < 0.2.0 | >= v0.12.0 | >= 1.9 |
