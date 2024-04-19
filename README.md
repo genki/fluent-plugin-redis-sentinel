@@ -48,7 +48,7 @@ For _key_, the plugin supports either way;
    You can do this simply using `key` option in td-agent configuration file.
 
    ```apache
-   type redis_store
+   type redis_sentinel
    key userdata
    ```
 
@@ -62,7 +62,7 @@ For _key_, the plugin supports either way;
    and you want to use each name of user, you can use `key_path` option.
 
    ```apache
-   type redis_store
+   type redis_sentinel
    key_path user.name
    ```
 
@@ -71,7 +71,7 @@ For _key_, the plugin supports either way;
 In addition, `key_prefix` and `key_suffix` are useful in some cases. Both are available either `key` and `key_path`
 
    ```apache
-   type redis_store
+   type redis_sentinel
    key_path user.name
    key_prefix ouruser.
    key_suffix .accesslog
@@ -105,9 +105,7 @@ Configuration
 
 | Key                 | Type   | Required?   |                  Default | Description                                       |
 | :----               | :----- | :---------- | :----------------------- | :------------                                     |
-| `sentinel_host`     | string | Optional    |                127.0.0.1 | Sentinel Host name of Redis server If Mulitple 
-                                                                          separate by ',' eg sentinel1,sentinel2            |
-                                                                          
+| `sentinel_host`     | string | Optional    |                127.0.0.1 | Sentinel Host name of Redis server If Mulitple separate by ',' eg sentinel1,sentinel2                                                    
 | `port`              | int    | Optional    |                     6379 | port number of Redis server                       |
 | `password`          | string | Optional    |                          | password for Redis connection                     |
 | `group_name`        | string | Optional    |                          | Add group name                                    |
