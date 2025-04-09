@@ -1,0 +1,4 @@
+AllCops:
+  DisabledByDefault: true  # デフォルトで全てのルールを無効にする
+  DisplayCopNames: true
+  NewCops: enable

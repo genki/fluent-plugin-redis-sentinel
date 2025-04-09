@@ -54,7 +54,7 @@ module Fluent::Plugin
 
     def start
       super
-      
+
       host=@sentinel_host
       hosts =  host.split(",")
 
@@ -72,10 +72,8 @@ module Fluent::Plugin
 
       # Printing Sentinel Server List
       $stdout.puts "Sentinel Server List #{sentinels}"
-      
-      
+
       @redis = Redis.new(name:@group_name,sentinels:sentinels,role: :master, timeout: @timeout)
-      
     end
 
     def shutdown
@@ -113,6 +111,8 @@ module Fluent::Plugin
                   operation_for_string(record)
                 when 'publish'
                   operation_for_publish(record)
+                when 'incrby'
+                  operation_for_incrby(record)
                 end
               rescue NoMethodError => e
                 puts e
@@ -195,6 +195,15 @@ module Fluent::Plugin
       key = get_key_from(record)
       value = get_value_from(record)
       @redis.publish key, value
+    end
+
+    def operation_for_incrby(record)
+      key = get_key_from(record)
+      # traverse(record, @value_path) で元の値を取得し、整数に変換する
+      raw_value = traverse(record, @value_path)
+      inc_value = raw_value.to_i  # 数値に変換（新規ユーザーが渡す値は数値として扱う）
+      @redis.incrby(key, inc_value)
+      set_key_expire key
     end
 
     def generate_zremrangebyrank_script(key, maxlen, order)

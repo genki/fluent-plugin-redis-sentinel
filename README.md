@@ -3,6 +3,7 @@ Redis Sentinel Output Plugin For fluentd
 ========================================
 
 [Fluentd][] output plugin to upload/publish event data to [Redis][] storage.
+
 ![Testing on Ubuntu](https://github.com/genki/fluent-plugin-redis-sentinel/workflows/Testing%20on%20Ubuntu/badge.svg)
 
 [Fluentd]: http://fluentd.org/
@@ -14,15 +15,15 @@ Requirements
 
 | fluent-plugin-redis-sentinel | fluentd | ruby |
 |------------------------|---------|------|
-| >= 0.2.0 | >= v0.14.15 | >= 2.1 |
-|  < 0.2.0 | >= v0.12.0 | >= 1.9 |
+| >= 0.2.0 | >= v0.14.15 | >= 3.0 |
 
 Background
 ----------
 
 This is folked project from [fluent-plugin-redisstore][].
 
-[fluent-plugin-redisstore]: https://github.com/moaikids/fluent-plugin-redisstore
+[fluent-plugin-redisstore]:
+https://github.com/development-ganesh123/fluent-plugin-redis-sentinel
 
 Features
 --------

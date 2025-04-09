@@ -53,6 +53,12 @@ class Redis
     $message = message
   end
 
+  def incrby(key, inc_value)
+    $command = :incrby
+    $key = key
+    $message = inc_value
+  end
+
   def quit
   end
 end
@@ -291,6 +297,26 @@ class RedisStoreOutputTest < Test::Unit::TestCase
     assert_equal :sadd, $command
     assert_equal "george", $key
     assert_equal message, $message
+  end
+
+  def test_incrby
+    config = %[
+      format_type plain
+      store_type incrby
+      key_path   user
+      value_path stat.attack
+    ]
+    d = create_driver(config)
+    message = {
+      'user' => 'george',
+      'stat' => { 'attack' => 7 }
+    }
+    d.run(default_tag: 'test') do
+      d.feed(get_time, message)
+    end
+    assert_equal :incrby, $command
+    assert_equal "george", $key
+    assert_equal 7, $message
   end
 
   def test_zset
