@@ -72,7 +72,7 @@ class RedisStoreOutputTest < Test::Unit::TestCase
       score_path b
     ]
     d = create_driver(config)
-    assert_equal("127.0.0.1", d.instance.host)
+    assert_equal("127.0.0.1", d.instance.sentinel_host)
     assert_equal(6379, d.instance.port)
     assert_equal(nil, d.instance.path)
     assert_equal(nil, d.instance.password)
@@ -95,7 +95,7 @@ class RedisStoreOutputTest < Test::Unit::TestCase
 
   def test_configure_host_port_db
     config = %[
-      host 192.168.2.3
+      sentinel_host 192.168.2.3
       port 9999
       password abc
       db 3
@@ -104,7 +104,7 @@ class RedisStoreOutputTest < Test::Unit::TestCase
       score_path b
     ]
     d = create_driver(config)
-    assert_equal "192.168.2.3", d.instance.host
+    assert_equal "192.168.2.3", d.instance.sentinel_host
     assert_equal 9999, d.instance.port
     assert_equal nil, d.instance.path
     assert_equal 'abc', d.instance.password
@@ -364,17 +364,10 @@ class RedisStoreOutputTest < Test::Unit::TestCase
     config = %[
       format_type plain
       store_type string
-      key_path   none
     ]
 
-    d = create_driver(config)
-    message = { 'user' => 'george' }
-    suppress_output do
-      assert_raise(Fluent::ConfigError) do
-        d.run(default_tag: 'test') do
-          d.feed(get_time, message)
-        end
-      end
+    assert_raise(Fluent::ConfigError) do
+      create_driver(config)
     end
   end
 
