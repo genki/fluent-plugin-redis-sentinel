@@ -72,7 +72,7 @@ module Fluent::Plugin
       end
 
       # Printing Sentinel Server List
-      $stdout.puts "Sentinel Server List #{sentinels} debug:#{@debug}"
+      $stdout.puts "Sentinel Server List #{sentinels} store_type:#{@store_type} debug:#{@debug}"
 
       @sentinels = sentinels
       @redis = Redis.new(name:@group_name, sentinels:@sentinels, role: :master, timeout: @timeout)
@@ -102,6 +102,9 @@ module Fluent::Plugin
             MessagePack::Unpacker.new(io).each { |message|
               begin
                 (_, time, record) = message
+                if @debug
+                  $stdout.puts "store_type: #{@store_type}, record: #{record}"
+                end
                 case @store_type
                 when 'zset'
                   operation_for_zset(record, time)
