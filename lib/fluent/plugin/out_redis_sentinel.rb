@@ -72,7 +72,7 @@ module Fluent::Plugin
       end
 
       # Printing Sentinel Server List
-      $stdout.puts "Sentinel Server List #{sentinels}"
+      $stdout.puts "Sentinel Server List #{sentinels} debug:#{@debug}"
 
       @sentinels = sentinels
       @redis = Redis.new(name:@group_name, sentinels:@sentinels, role: :master, timeout: @timeout)
@@ -205,7 +205,7 @@ module Fluent::Plugin
       raw_value = traverse(record, @value_path)
       inc_value = raw_value.to_i  # 数値に変換（新規ユーザーが渡す値は数値として扱う）
       if @debug
-        log.debug "key: #{key}, inc_value: #{inc_value}"
+        $stdout.puts "key: #{key}, inc_value: #{inc_value}"
       end
       @redis.incrby(key, inc_value)
       set_key_expire key
