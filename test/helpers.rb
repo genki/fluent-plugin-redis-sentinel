@@ -24,7 +24,7 @@ unless ENV.has_key?('VERBOSE')
   $log = nulllogger
 end
 
-require 'fluent/plugin/out_redis_store'
+require 'fluent/plugin/out_redis_sentinel'
 
 class Test::Unit::TestCase
   include Fluent::Test::Helpers
